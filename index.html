@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Farol — Tudo em um só lugar</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --dark: #111111;
+      --card: #181818;
+      --border: #222222;
+      --wave: #1A6B8A;
+      --foam: #A8D5E2;
+      --text: #f0f0f0;
+      --muted: #888;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 24px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(26,107,138,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 8vw, 5.5rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: var(--foam);
+      line-height: 1;
+      margin-bottom: 8px;
+      position: relative;
+    }
+
+    .logo span {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background: var(--wave);
+      border-radius: 50%;
+      margin-left: 4px;
+      vertical-align: middle;
+      position: relative;
+      top: -6px;
+    }
+
+    .eyebrow {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--wave);
+      margin-bottom: 32px;
+    }
+
+    .tagline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 4.5vw, 3rem);
+      font-weight: 700;
+      line-height: 1.25;
+      max-width: 720px;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    .tagline em {
+      font-style: normal;
+      color: var(--foam);
+    }
+
+    .sub {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 480px;
+      line-height: 1.6;
+      margin-bottom: 48px;
+    }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: #25D366;
+      color: #000;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 16px 32px;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 32px rgba(37,211,102,0.25);
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 48px rgba(37,211,102,0.4);
+    }
+
+    .cta-btn svg { flex-shrink: 0; }
+
+    /* ── STREAMINGS ── */
+    .streamings {
+      padding: 80px 24px;
+      text-align: center;
+      background: var(--dark);
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--wave);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      font-size: 0.95rem;
+      max-width: 440px;
+      margin: 0 auto 48px;
+      line-height: 1.6;
+    }
+
+    .streaming-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .streaming-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      padding: 10px 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .streaming-pill:hover {
+      border-color: var(--wave);
+      background: rgba(26,107,138,0.1);
+    }
+
+    .pill-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── FEATURES ── */
+    .features {
+      padding: 80px 24px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .feature-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 24px;
+      transition: border-color 0.2s;
+    }
+
+    .feature-card:hover { border-color: var(--wave); }
+
+    .feature-icon {
+      font-size: 1.8rem;
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    .feature-card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--foam);
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── CTA FINAL ── */
+    .cta-section {
+      padding: 100px 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 70% at 50% 50%, rgba(26,107,138,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-section .tagline { margin: 16px auto 12px; }
+
+    .cta-section .sub { margin: 0 auto 40px; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 24px;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    footer a { color: var(--wave); text-decoration: none; }
+
+    /* ── WHATSAPP FLOAT ── */
+    .wa-float {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 999;
+      background: #25D366;
+      border-radius: 50%;
+      width: 58px;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 24px rgba(37,211,102,0.4);
+      transition: transform 0.2s;
+      text-decoration: none;
+    }
+
+    .wa-float:hover { transform: scale(1.1); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 520px) {
+      .streaming-grid { gap: 10px; }
+      .streaming-pill { font-size: 0.82rem; padding: 8px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="eyebrow">by Orla Sistemas</p>
+    <div class="logo">farol<span></span></div>
+    <h1 class="tagline">
+      Para de procurar. Filmes, séries e os principais streamings<br>
+      <em>em um só lugar.</em> Sem complicação.
+    </h1>
+    <p class="sub">Acesso a um catálogo completo com tudo que você já paga espalhado por aí — reunido, organizado, fácil.</p>
+    <a class="cta-btn" href="https://wa.me/5511949682113?text=Oi%2C%20quero%20saber%20mais%20sobre%20o%20Farol!" target="_blank" rel="noopener">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="#000">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      Quero saber mais
+    </a>
+  </section>
+
+  <!-- STREAMINGS -->
+  <section class="streamings">
+    <p class="section-label">Plataformas</p>
+    <h2 class="section-title">Tudo que você já conhece</h2>
+    <p class="section-sub">Os principais serviços de streaming reunidos em uma experiência só.</p>
+    <div class="streaming-grid">
+      <div class="streaming-pill"><span class="pill-dot" style="background:#E50914"></span> Netflix</div>
+      <div class="streaming-pill"><span class="pill-dot" style="background:#1DB954"></span> Disney+</div>
+      <div class="streaming-pill"><span class="pill-dot" style="background:#00A8E0"></span> HBO Max</div>
+      <div class="streaming-pill"><span class="pill-dot" style="background:#FF9900"></span> Prime Video</div>
+      <div class="streaming-pill"><span class="pill-dot" style="background:#F2C94C"></span> Globoplay</div>
+      <div class="streaming-pill"><span class="pill-dot" style="background:#E8115B"></span> Spotify</div>
+      <div class="streaming-pill"><span class="pill-dot" style="background:#564AF7"></span> Paramount+</div>
+      <div class="streaming-pill"><span class="pill-dot" style="background:#A8D5E2"></span> e muito mais</div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features">
+    <div style="text-align:center">
+      <p class="section-label">Por que o Farol?</p>
+      <h2 class="section-title">Simples assim</h2>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="feature-icon">🎬</span>
+        <h3>Catálogo imenso</h3>
+        <p>Filmes, séries, documentários e shows dos maiores serviços do mundo.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">📺</span>
+        <h3>Feito pra TV</h3>
+        <p>Grande, nítido, sem enrolação. Do jeito que tem que ser.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">⚡</span>
+        <h3>Acesso rápido</h3>
+        <p>Sem burocracia. Fale com a gente pelo WhatsApp e comece a assistir.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">💬</span>
+        <h3>Suporte humano</h3>
+        <p>Tem dúvida? A gente responde. Atendimento direto, sem robô.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="cta-section">
+    <p class="section-label">Pronto pra começar?</p>
+    <h2 class="tagline">Um clique e você já sabe tudo.</h2>
+    <p class="sub">Fale com a gente agora pelo WhatsApp e descubra como funciona.</p>
+    <a class="cta-btn" href="https://wa.me/5511949682113?text=Oi%2C%20quero%20saber%20mais%20sobre%20o%20Farol!" target="_blank" rel="noopener">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="#000">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      Falar no WhatsApp
+    </a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 Farol · Uma solução <a href="#">Orla Sistemas</a></p>
+  </footer>
+
+  <!-- FLOAT WA -->
+  <a class="wa-float" href="https://wa.me/5511949682113?text=Oi%2C%20quero%20saber%20mais%20sobre%20o%20Farol!" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="#000">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+</body>
+</html>
